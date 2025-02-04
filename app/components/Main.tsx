@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CurrentWeather from "./CurrentWeather";
+import Forecast from "./Forecast";
 
 const Main = () => {
 	const [selectedCity, setSelectedCity] = useState("Nashville");
@@ -8,6 +9,7 @@ const Main = () => {
 	const [conditions, setConditions] = useState("");
 	const [temp, setTemp] = useState(0);
 	const [description, setDescription] = useState("");
+	const [forecast, setForecast] = useState([]);
 
 	async function getCityWeather(city: string) {
 		await fetch(
@@ -29,6 +31,8 @@ const Main = () => {
 				setTemp(currentConditions.temp);
 
 				setDescription(res.description);
+
+				setForecast(res.days);
 			})
 			.catch((err) => {
 				console.error(err);
@@ -40,13 +44,14 @@ const Main = () => {
 	}, [selectedCity]);
 
 	return (
-		<div className="bg-white border border-gray-500 rounded-lg">
+		<div className="flex flex-col gap-4">
 			<CurrentWeather
 				address={address}
 				conditions={conditions}
 				description={description}
 				temp={temp}
 			/>
+			<Forecast forecast={forecast} />
 		</div>
 	);
 };

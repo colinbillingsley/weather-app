@@ -24,7 +24,7 @@ const CurrentWeather = ({
 	}
 
 	return (
-		<div className="p-4 text-black">
+		<div className="p-6 text-black bg-white border border-gray-500 rounded-lg">
 			<div className="flex flex-col items-center justify-center gap-2">
 				<h3 className="text-3xl">{address}</h3>
 
