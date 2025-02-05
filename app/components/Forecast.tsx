@@ -1,4 +1,4 @@
-import { CloudRain, CloudSun, Cloudy, Sun } from "lucide-react";
+import { CloudRain, CloudSun, Cloudy, Snowflake, Sun } from "lucide-react";
 import React from "react";
 import dayjs from "dayjs";
 
@@ -37,19 +37,18 @@ interface ForecastProps {
 }
 
 function getConditionIcon(condition: string) {
-	switch (condition) {
-		case "Clear":
-			return <Sun size={30} strokeWidth={1} />;
-		case "Partially cloudy":
-			return <CloudSun size={30} strokeWidth={1} />;
-		case "Rain, Partially cloudy":
-			return <CloudRain size={30} strokeWidth={1} />;
-		case "Overcast":
-			return <Cloudy size={30} strokeWidth={1} />;
-		case "Clear":
-			return <Sun size={30} strokeWidth={1} />;
-		default:
-			return "- - -";
+	if (condition.includes("Snow")) {
+		return <Snowflake size={30} strokeWidth={1} />;
+	} else if (condition.includes("Rain")) {
+		return <CloudRain size={30} strokeWidth={1} />;
+	} else if (condition.includes("Overcast")) {
+		return <Cloudy size={30} strokeWidth={1} />;
+	} else if (condition.includes("Partially cloudy")) {
+		return <CloudSun size={30} strokeWidth={1} />;
+	} else if (condition.includes("Clear")) {
+		return <Sun size={30} strokeWidth={1} />;
+	} else {
+		return "- - -";
 	}
 }
 

@@ -1,4 +1,4 @@
-import { Sun } from "lucide-react";
+import { CloudRain, CloudSun, Cloudy, Snowflake, Sun } from "lucide-react";
 import React from "react";
 
 interface CurrentWeatherProps {
@@ -15,11 +15,18 @@ const CurrentWeather = ({
 	temp,
 }: CurrentWeatherProps) => {
 	function getConditionIcon(condition: string) {
-		switch (condition) {
-			case "Clear":
-				return <Sun size={50} strokeWidth={1} />;
-			default:
-				return "Unknown";
+		if (condition.includes("Snow")) {
+			return <Snowflake size={30} strokeWidth={1} />;
+		} else if (condition.includes("Rain")) {
+			return <CloudRain size={30} strokeWidth={1} />;
+		} else if (condition.includes("Overcast")) {
+			return <Cloudy size={30} strokeWidth={1} />;
+		} else if (condition.includes("Partially cloudy")) {
+			return <CloudSun size={30} strokeWidth={1} />;
+		} else if (condition.includes("Clear")) {
+			return <Sun size={30} strokeWidth={1} />;
+		} else {
+			return "- - -";
 		}
 	}
 
@@ -28,7 +35,7 @@ const CurrentWeather = ({
 			<div className="flex flex-col items-center justify-center gap-2">
 				<h3 className="text-3xl">{address}</h3>
 
-				<p className="text-7xl font-extralight">{temp}°F</p>
+				<p className="text-7xl font-extralight">{Math.round(temp)}°F</p>
 
 				<div className="flex items-center gap-2">
 					<span>{getConditionIcon(conditions)}</span>

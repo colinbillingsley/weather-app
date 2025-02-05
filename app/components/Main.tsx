@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from "react";
 import CurrentWeather from "./CurrentWeather";
 import Forecast from "./Forecast";
+import WindInfo from "./WindInfo";
+import UVIndex from "./UVIndex";
+import Pressure from "./Pressure";
 
 const Main = () => {
 	const [selectedCity, setSelectedCity] = useState("Nashville");
@@ -10,6 +13,11 @@ const Main = () => {
 	const [temp, setTemp] = useState(0);
 	const [description, setDescription] = useState("");
 	const [forecast, setForecast] = useState([]);
+	const [windDirection, setWindDirection] = useState(0);
+	const [windSpeed, setWindSpeed] = useState(0);
+	const [windGust, setWindGust] = useState(0);
+	const [uvIndex, setUVIndex] = useState(0);
+	const [pressure, setPressure] = useState(0);
 
 	async function getCityWeather(city: string) {
 		await fetch(
@@ -29,9 +37,13 @@ const Main = () => {
 				setAddress(res.address);
 				setConditions(currentConditions.conditions);
 				setTemp(currentConditions.temp);
+				setWindDirection(currentConditions.winddir);
+				setWindSpeed(currentConditions.windspeed);
+				setWindGust(currentConditions.windgust);
+				setUVIndex(currentConditions.uvindex);
+				setPressure(currentConditions.pressure);
 
 				setDescription(res.description);
-
 				setForecast(res.days);
 			})
 			.catch((err) => {
@@ -52,6 +64,15 @@ const Main = () => {
 				temp={temp}
 			/>
 			<Forecast forecast={forecast} />
+			<div className="grid grid-cols-4 gap-4">
+				<WindInfo
+					windDirection={windDirection}
+					windSpeed={windSpeed}
+					windGust={windGust}
+				/>
+				<UVIndex uvIndex={uvIndex} />
+				<Pressure pressure={pressure} />
+			</div>
 		</div>
 	);
 };
